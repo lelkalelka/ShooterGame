@@ -1073,10 +1073,10 @@ void FShooterMainMenu::RecordDemoChanged(TSharedPtr<FShooterMenuItem> MenuItem, 
 void FShooterMainMenu::OnUIHostFreeForAll()
 {
 #if WITH_EDITOR
-	if (GIsEditor == true)
-	{
-		return;
-	}
+	//if (GIsEditor == true)
+	//{
+	//	return;
+	//}
 #endif
 	if (!IsMapReady())
 	{
@@ -1104,10 +1104,10 @@ void FShooterMainMenu::OnUIHostFreeForAll()
 void FShooterMainMenu::OnUIHostTeamDeathMatch()
 {
 #if WITH_EDITOR
-	if (GIsEditor == true)
+	/*if (GIsEditor == true)
 	{
 		return;
-	}
+	}*/
 #endif
 	if (!IsMapReady())
 	{

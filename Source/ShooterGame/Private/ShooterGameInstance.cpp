@@ -439,12 +439,23 @@ bool UShooterGameInstance::LoadFrontEndMap(const FString& MapName)
 	bool bSuccess = true;
 
 	// if already loaded, do nothing
+	//UWorld* const World = GetWorld();
+	//if (World)
+	//{
+	//	FString const CurrentMapName = *World->PersistentLevel->GetOutermost()->GetName();
+	//	//if (MapName.Find(TEXT("Highrise")) != -1)
+	//	if (CurrentMapName == MapName)
+	//	{
+	//		return bSuccess;
+	//	}
+	//}
 	UWorld* const World = GetWorld();
 	if (World)
 	{
 		FString const CurrentMapName = *World->PersistentLevel->GetOutermost()->GetName();
-		//if (MapName.Find(TEXT("Highrise")) != -1)
-		if (CurrentMapName == MapName)
+
+		FString tmp = MapName.Right(MapName.Len() - FString(TEXT("/Game/Maps/")).Len());
+		if (CurrentMapName.Find(tmp) != -1)
 		{
 			return bSuccess;
 		}
@@ -1183,6 +1194,20 @@ void UShooterGameInstance::OnSearchSessionsComplete(bool bWasSuccessful)
 	{
 		Session->OnFindSessionsComplete().Remove(OnSearchSessionsCompleteDelegateHandle);
 	}
+}
+
+bool UShooterGameInstance::StartPIEGameInstance(ULocalPlayer* LocalPlayer, bool bInSimulateInEditor, bool bAnyBlueprintErrors, bool bStartInSpectatorMode)
+{
+	Super::StartPIEGameInstance(LocalPlayer, bInSimulateInEditor, bAnyBlueprintErrors, bStartInSpectatorMode);
+	UWorld* const World = GetWorld();
+	if (World)
+	{
+		FString CurrentMapName = World->PersistentLevel->GetOutermost()->GetName();
+		if (CurrentMapName.Find(TEXT("ShooterEntry")) != -1)
+			GotoInitialState();
+	}
+
+	return true;
 }
 
 bool UShooterGameInstance::Tick(float DeltaSeconds)

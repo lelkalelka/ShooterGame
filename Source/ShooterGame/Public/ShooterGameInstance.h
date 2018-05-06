@@ -96,6 +96,9 @@ UCLASS(config=Game)
 class UShooterGameInstance : public UGameInstance
 {
 public:
+
+	virtual bool StartPIEGameInstance(ULocalPlayer* LocalPlayer, bool bInSimulateInEditor, bool bAnyBlueprintErrors, bool bStartInSpectatorMode) override;
+
 	GENERATED_UCLASS_BODY()
 
 public:
